@@ -16,9 +16,7 @@ class TeamsController < ApplicationController
   end
 
   def edit
-    unless current_user.isOwner?(@team)
-      reditect_to team_path
-    end
+    reditect_to team_path unless current_user.isOwner?(@team)
   end
 
   def create
