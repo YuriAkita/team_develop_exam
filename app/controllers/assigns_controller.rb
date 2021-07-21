@@ -66,3 +66,11 @@ class AssignsController < ApplicationController
     Team.friendly.find(params[:team_id])
   end
 end
+
+  def ensure_current_user
+    if assign.user || 
+    @current_user.id != @task.user.id
+      flash[:notice]="権限がありません"
+      redirect_to tasks_path
+    end
+  end
