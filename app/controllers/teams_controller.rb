@@ -48,7 +48,7 @@ class TeamsController < ApplicationController
   def dashboard
     @team = current_user.keep_team_id ? Team.find(current_user.keep_team_id) : current_user.teams.first
   end
-  
+
   def move_owner
     if @team.update(owner_params)
       @user = User.find(@team.owner_id)
@@ -68,7 +68,7 @@ class TeamsController < ApplicationController
   def team_params
     params.fetch(:team, {}).permit %i[name icon icon_cache owner_id keep_team_id]
   end
-  
+
   def owner_params
     params.permit(:owner_id)
   end

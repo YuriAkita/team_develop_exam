@@ -7,6 +7,6 @@ class TeamMailer < ApplicationMailer
   #   en.team_mailer.move_owner.subject
   #
   def move_owner_mail(user)
-    mail to: user.email, subject: "チームのオーナー権限が移譲されました。" 
+    mail to: user.email, subject: "チームのオーナー権限が移譲されました。"
   end
 end
