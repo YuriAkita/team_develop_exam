@@ -33,12 +33,15 @@
             <a href="#" class="nav-link">
               <i class="fa fa-circle-o nav-icon"></i>
               <p>
-                <%= agenda.title %>
+                <table>
+                  <%= agenda.title %>
+                  <%= link_to '削除', agenda, method: :delete %>
+                </table>
                 <i class="right fa fa-angle-left"></i>
               </p>
             </a>
             <ul class="nav nav-treeview" style="display: block;">
-              <% agenda.articles.each do |article| %>
+            <% agenda.articles.each do |article| %>
                 <li class="nav-item">
                   <%= link_to article_path(article), class: 'nav-link' do %>
                     <p><%= article.title %></p>
