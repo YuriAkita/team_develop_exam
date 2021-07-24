@@ -35,7 +35,9 @@
               <p>
                 <table>
                   <%= agenda.title %>
+                  <% if agenda.user_id == current_user.id || agenda.team.owner_id == current_user.id %>
                   <%= link_to '削除', agenda, method: :delete %>
+                  <% end %>
                 </table>
                 <i class="right fa fa-angle-left"></i>
               </p>
@@ -49,7 +51,7 @@
                 </li>
               <% end %>
               <li class="nav-item">
-                <%= link_to new_agenda_article_path(agenda), class: 'nav-link' do %>
+                <%= link_to new_agenda_article_path(agenda.id), class: 'nav-link' do %>
                   <p>+ <%= I18n.t('views.messages.create_article') %></p>
                 <% end %>
               </li>
