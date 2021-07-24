@@ -49,6 +49,18 @@ class TeamsController < ApplicationController
     @team = current_user.keep_team_id ? Team.find(current_user.keep_team_id) : current_user.teams.first
   end
 
+<<<<<<< HEAD
+=======
+  def move_owner
+    if @team.update(owner_params)
+      TeamMailer.move_owner_mail(@agenda).deliver
+      redirect_to @team, notice: 'the owner right successfully moved.'
+    else
+      render @team
+    end
+  end
+
+>>>>>>> e882cf8 (Agendaが削除されると、Teamユーザー全員に通知メールを送信)
   private
 
   def set_team

@@ -20,6 +20,17 @@ class AgendasController < ApplicationController
       render :new
     end
   end
+<<<<<<< HEAD
+=======
+  
+  def destroy
+    if @agenda.user_id == current_user.id || @agenda.team.owner_id == current_user.id
+      @agenda.destroy
+      AgendaMailer.agenda_mail(@agenda).deliver
+      redirect_to dashboard_url, notice: "アジェンダを削除しました。"
+    end
+  end
+>>>>>>> e882cf8 (Agendaが削除されると、Teamユーザー全員に通知メールを送信)
 
   private
 
