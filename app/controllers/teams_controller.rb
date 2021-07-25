@@ -51,8 +51,9 @@ class TeamsController < ApplicationController
 
   def move_owner
     if @team.update(owner_params)
-      TeamMailer.move_owner_mail(@agenda).deliver
-      redirect_to @team, notice: 'the owner right successfully moved.'
+      @user = User.find(@team.owner_id)
+      TeamMailer.move_owner_mail(@user).deliver
+      redirect_to team_path(@team), notice: 'the owner right successfully moved.'
     else
       render @team
     end
