@@ -1,6 +1,6 @@
 class TeamsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_team, only: %i[show edit update destroy]
+  before_action :set_team, only: %i[show edit update destroy move_owner]
 
   def index
     @teams = Team.all
@@ -15,7 +15,9 @@ class TeamsController < ApplicationController
     @team = Team.new
   end
 
-  def edit; end
+  def edit
+    reditect_to team_path unless current_user.isOwner?(@team)
+  end
 
   def create
     @team = Team.new(team_params)
@@ -47,6 +49,16 @@ class TeamsController < ApplicationController
     @team = current_user.keep_team_id ? Team.find(current_user.keep_team_id) : current_user.teams.first
   end
 
+  def move_owner
+    if @team.update(owner_params)
+      @user = User.find(@team.owner_id)
+      TeamMailer.move_owner_mail(@user).deliver
+      redirect_to team_path(@team), notice: 'the owner right successfully moved.'
+    else
+      render @team
+    end
+  end
+
   private
 
   def set_team
@@ -55,5 +67,9 @@ class TeamsController < ApplicationController
 
   def team_params
     params.fetch(:team, {}).permit %i[name icon icon_cache owner_id keep_team_id]
+  end
+
+  def owner_params
+    params.permit(:owner_id)
   end
 end
